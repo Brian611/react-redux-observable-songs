@@ -10,14 +10,16 @@ import {
 
 const fetchSongsEpic = action$ => action$.pipe(
     ofType(actionTypes.FETCH_SONGS_START),
-    mergeMap(action => ajax.getJSON(`https://jsonplaceholder.typicode.com/todos`).pipe(
-        map(response => {
-            return fetchSongsSuccess(response)
-        }),
-        catchError(({ message, request: { url } }) => {
-            return of(fetchSongsFailure(`${message}: ${url}`))
-        })
-    ))
+    mergeMap(action => {
+        return ajax.getJSON(`https://jsonplaceholder.typicode.com/todos`).pipe(
+            map(response => {
+                return fetchSongsSuccess(response)
+            }),
+            catchError(({ message, request: { url } }) => {
+                return of(fetchSongsFailure(`${message}: ${url}`))
+            })
+        )
+    })
 );
 
 export const rootEpic = combineEpics(
