@@ -1,7 +1,7 @@
 import { combineEpics, ofType } from 'redux-observable';
 import { map, mergeMap, catchError } from "rxjs/operators";
 import { ajax } from "rxjs/ajax";
-import { of, throwError } from "rxjs";
+import { of } from "rxjs";
 import {
     actionTypes,
     fetchSongsFailure,
@@ -14,7 +14,9 @@ const fetchSongsEpic = action$ => action$.pipe(
         map(response => {
             return fetchSongsSuccess(response)
         }),
-        catchError(error => of(fetchSongsFailure(error)))
+        catchError(({ message, request: { url } }) => {
+            return of(fetchSongsFailure(`${message}: ${url}`))
+        })
     ))
 );
 

@@ -38,7 +38,7 @@ const songsReducer = (state = initialState, action) => {
         )
     }
 
-    if (action.type === actionTypes.FETCH_SONGS_SUCCESS) {
+    if (action.type === actionTypes.FETCH_SONGS_FAILURE) {
         const { error } = action.payload
         return Object.assign({},
             state, {

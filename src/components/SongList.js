@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { selectSong } from '../actions';
 
@@ -6,7 +6,17 @@ class SongList extends Component {
     renderList = () => {
         if (!this.props.songs)
             return <div>Loading...</div>
-
+        if (this.props.error) {
+            return (
+                <div className="ui negative message">
+                    <i className="close icon"></i>
+                    <div className="header">
+                        Issue with the API
+                </div>
+                    <p>{this.props.error}</p>
+                </div>
+            )
+        }
         return this.props.songs.map((song) => {
             return (
                 <div className="item" key={song.title}>
@@ -32,9 +42,11 @@ class SongList extends Component {
     }
 }
 
-const mapStateToProps = ({ songs: { songs } }) => {
+const mapStateToProps = ({ songs: { songs, error } }) => {
+    console.log('error', error);
     return {
-        songs
+        songs,
+        error
     };
 }
 
@@ -42,3 +54,5 @@ const mapStateToProps = ({ songs: { songs } }) => {
 export default connect(mapStateToProps, {
     selectSong
 })(SongList);
+
+

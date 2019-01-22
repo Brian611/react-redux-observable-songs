@@ -5,14 +5,14 @@ const SongDetails = ({ song }) => {
     if (!song)
         return <div>Please select song</div>
 
-    const { title, userId } = song;
+    const { title, id } = song;
     return (
         <div>
             <h3>Details for:</h3>
             <p>
                 Title: {title}
                 <br />
-                User ID: {userId}
+                User ID: {id}
             </p>
         </div>
     )
